@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Todos Node.js Lesson One</title>
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <link href="//cdn.bootcss.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container">
+    <h1 class="page-heder"><%= title %></h1>
+    <form action="/todos" method="post">
+        <div class="form-group">
+            <label for="content">内容</label>
+            <input type="text" name="content" id="content" class="form-control"/>
+        </div>
+        <div class="form-group">
+            <input type="submit" value="提交" class="btn btn-primary">
+        </div>
+    </form>
+    <ul>
+        <% for(var i=0; i<todos.length; i++) {%>
+        <li><%= todos[i].get('content') %></li>
+        <% } %>
+    </ul>
+</div>
+</body>
+</html>

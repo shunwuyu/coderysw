@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>开发团 吃冰啦</title>
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <link rel="stylesheet" href="/stylesheets/weui.min.css" />
+    <link rel="stylesheet" href="/stylesheets/common.css">
+    <link rel="stylesheet" href="/stylesheets/bing.css">
+</head>
+<body ontouchstart>
+    <header class="fixed_header">
+        <nav>
+            <div class="nav">
+                <a href="javascript:;" class="back_btn"></a>
+                <h2 class="title">产品种类</h2>
+            </div>
+        </nav>
+    </header>
+    <div class="container mt_hd" style="height:1000px;">
+        <div class="product">
+            <div class="hd">
+            </div>
+            <div class="bd">
+                <div class="weui_grids">
+                    <% for(var i=0;i<drink.length;i++){%>
+                    <a href="javascript:;" class="weui_grid" data-pid="<%= drink[i].pid%>" data-cat="<%= drink[i].cat%>">
+                        <div class="weui_grid_title"><%= drink[i].name%></div>
+                        <p class="weui_grid_price"><%= drink[i].price%>元</p>
+                    </a>
+                    <%}%>
+                </div>
+                <div class="weui_grids">
+                    <% for(var i=0;i<icecream.length;i++){%>
+                    <a href="javascript:;" class="weui_grid"  data-pid="<%= drink[i].pid%>" data-cat="<%= drink[i].cat%>">
+                        <div class="weui_grid_title"><%= icecream[i].name%></div>
+                        <p class="weui_grid_price"><%= icecream[i].price%>元</p>
+                    </a>
+                    <%}%>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="actionSheet_wrap">
+        <div class="weui_mask_transition" id="mask"></div>
+        <div class="weui_actionsheet" id="weui_actionsheet" style="di">
+            <div class="weui_actionsheet_menu">
+                <div class="weui_actionsheet_cell">确定消费</div>
+            </div>
+            <div class="weui_actionsheet_action">
+                <div class="weui_actionsheet_cell" id="actionsheet_cancel">取消</div>
+            </div>
+        </div>
+    </div>
+    <div style="display:none"><img src="/images/share.jpg" /></div>
+    <script src="/javascripts/zepto.min.js"></script>
+    <script src="/javascripts/common.js"></script>
+    <script>
+    $(function() {
+        var currentProduct = {};
+
+        $('.weui_grid').click(function(){
+            $('#mask').show().addClass('weui_fade_toggle');
+            $('.weui_actionsheet').addClass('weui_actionsheet_toggle');
+            var pid = $(this).data('pid');
+            var cat = $(this).data('cat');
+            currentProduct.pid = pid;
+            currentProduct.cat = cat;
+            return false;
+        });
+
+        $('.weui_actionsheet_cell,#mask').click(function(){
+            $('#mask').hide().removeClass('weui_actionsheet_toggle');
+            $('.weui_actionsheet').removeClass('weui_actionsheet_toggle');
+            return false;
+        });
+
+        $('.weui_actionsheet_menu .weui_actionsheet_cell').click(function() {
+            $.getJSON('/bing/buy',{pid:currentProduct.pid,cat:currentProduct.cat} , function(results) {
+                if(results.status == 'error') {
+                    if(results.message == 'unlogin') {
+                        window.location.href = '/login';
+                    } else if(results.message == 'notenough') {
+                        alert('余额不足，请找小顾充值');
+                        // setTimeout(function() ,2000);
+                    }
+                    return;
+                }
+            })
+        });
+    });
+    </script>
+</body>
+</html>

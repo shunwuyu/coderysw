@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="zh-hans">
+<head>
+    <meta charset="UTF-8">
+    <title>老虎机</title>
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <script src="http://g.tbcdn.cn/mtb/lib-flexible/0.3.4/??flexible_css.js,flexible.js"></script>
+    <style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    a {
+        text-decoration: none;
+        color:#333;
+    }
+
+    a:-webkit-any-link {
+        text-decoration: none;
+    }
+
+    .board {
+        width: 9rem;
+        height: 11rem;
+        -webkit-transform: translateY(-50%);
+        transform: translateY(-50%);
+        top:50%;
+        left:.5rem;
+        position: absolute;
+    }
+
+    .board .tiles {
+        width: 100%;
+        height: 9rem;
+        position: relative;
+        background-color: #eee;
+        border: 1px solid #ccc;
+    }
+
+    .tile{
+        position: absolute;
+        width: 2.25rem;
+        height: 2.25rem;
+    }
+
+    .tile2 {
+        left:2.25rem;
+    }
+
+    .tile3 {
+        left:4.5rem;
+    }
+
+    .tile4 {
+        left:6.75rem;
+    }
+
+    .tile5 {
+        top:2.25rem;
+        right:0rem;
+    }
+
+    .tile6 {
+        top:4.5rem;
+        right:0rem;
+    }
+
+    .tile7 {
+        bottom:0rem;
+        right:0rem;
+    }
+
+    .tile8 {
+        bottom:0rem;
+        right:2.25rem;
+    }
+
+    .tile9 {
+        bottom:0rem;
+        right:4.5rem;
+    }
+
+    .tile10 {
+        bottom:0rem;
+        left:0rem;
+    }
+
+    .tile11 {
+        bottom:2.25rem;
+        left:0rem;
+    }
+
+    .tile12 {
+        top:2.25rem;
+        left:0rem;
+    }
+
+    .logo{
+        width: 4.5rem;
+        height: 4.5rem;
+        position: absolute;
+        top:2.25rem;
+        left:2.25rem;
+        border: 1px solid #ccc;
+    }
+
+    .tile,.logo{
+        display: -webkit-flex;
+        display: flex;
+        -webkit-align-items: center;
+        align-items: center;
+        -webkit-justify-content: center;
+        justify-content: center;
+        color: #333;
+        font-size: 20px;
+    }
+
+    .tiles {
+        height:9rem;
+    }
+
+    .btn{
+        display: block;
+        margin-top: .5rem;
+        width: 8rem;
+        margin-left: .5rem;
+        background-color: red;
+        text-align: center;
+        color:white;
+        font-size: 18px;
+        height: 1rem;
+        line-height: 1rem;
+        -webkit-border-radius: .5rem;
+        -ms-border-radius: .5rem;
+        border-radius: .5rem;
+    }
+
+    .btn:active {
+        background-color: pink;
+    }
+    /*下右边框*/
+    .brbd{
+        border: 1px solid #ccc;
+        border-left: 0;
+        border-top: 0;
+    }
+
+    .bbd {
+        border-bottom: 1px solid #ccc;
+    }
+
+    .lbd {
+        border-left: 1px solid #ccc;
+    }
+    .rbd {
+        border-right: 1px solid #ccc;
+    }
+
+    .tile.on {
+        background-color: yellow;
+        color:#333;
+        box-shadow:1px 1px 5px rgba(0,0,0,.25);
+    }
+    .pg-title {
+        margin: 1rem 0px;
+        font-size: 24px;
+    }
+
+    .center{
+        text-align: center;
+    }
+    </style>
+</head>
+<body>
+    <h1 class="pg-title center">520幸运大抽奖
+        <small>蜗牛赞助奖品</small>
+    </h1>
+    <div class="board">
+        <div class="tiles">
+            <div class="tile tile1 brbd ">
+                <p>打火机</p>
+            </div>
+            <div class="tile tile2 rbd">
+                <p>润田</p>
+            </div>
+            <div class="tile tile3 rbd">
+                <p>芙蓉王</p>
+            </div>
+            <div class="tile tile4 bbd">
+                <p>金圣</p>
+            </div>
+            <div class="tile tile5 bbd">
+                <p>槟榔</p>
+            </div>
+            <div class="tile tile6 bbd">
+                <p>可口可乐</p>
+            </div>
+            <div class="tile tile7 lbd">
+                <p>花生米</p>
+            </div>
+            <div class="tile tile8 lbd">
+                <p>二锅头</p>
+            </div>
+            <div class="tile tile9 lbd">
+                <p>乐事</p>
+            </div>
+            <div class="tile tile10 rbbd">
+                <p>美年达</p>
+            </div>
+            <div class="tile tile11 bbd">
+                <p>白沙</p>
+            </div>
+            <div class="tile tile12 bbd">
+                <p>黄鹤楼</p>
+            </div>
+        </div>
+        <a href="javascript:;" id="start" class="btn">转起来</a>
+        <div class="logo">
+            <p id="prize"></p>
+        </div>
+    </div>
+    <audio src="http://xunlei.sc.chinaz.com/files/download/sound1/201302/2741.mp3" id="media" preload=""></audio>
+    <script>
+    var isPlay = false;
+    document.getElementById('start').addEventListener('click', doAward, false);
+    var tiles = document.querySelectorAll('.tile');
+    var prizeEle = document.getElementById('prize');
+    var i = 0,j = 0,k = 6;
+    var interval;
+    var num;
+    var voiceEle = document.getElementById('media');
+    function doAward() {
+        prizeEle.innerHTML = '';
+        num = Math.ceil(Math.random()*11+0);
+
+        if(isPlay) {
+            return;
+        }
+        isPlay = true;
+        interval = setInterval(function() {
+            if(i != 0) {
+                tiles[i-1].classList.remove('on');
+            } else {
+                if(j > 0) {
+                    tiles[tiles.length-1].classList.remove('on');
+                }
+            }
+
+            if(j == k-1 && i == num) {
+                //停止并显示奖品
+                stopAward();
+            }
+
+            tiles[i].classList.add('on');
+            voiceEle.play();
+            i++;
+            if(i == tiles.length) {
+                i = 0;
+                j++;
+                if(j == k) {
+                    //停止并显示奖品
+                    stopAward();
+                }
+            }
+        },50);
+    }
+
+    function stopAward() {
+        isPlay = false;
+        clearInterval(interval);
+        j = 0;
+        //显示奖品
+        prizeEle.innerHTML = tiles[num].getElementsByTagName('p')[0].innerHTML;
+    }
+    </script>
+</body>
+</html>

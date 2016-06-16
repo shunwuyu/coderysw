@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+    *{
+        margin: 0;
+        padding: 0;
+    }
+
+    #card {
+        position: relative;
+        overflow: hidden;
+        width: 100px;
+        height: 100px;
+        perspective: 2000px;
+    }
+
+    #card .front,#card .back {
+        width: 100px;
+        height: 100px;
+        font-size: 40px;
+        line-height: 100px;
+        text-align: center;
+        color:white;
+        transition: .6s;
+        backface-visibility: hidden;
+
+    }
+    #card .front {
+        background-color: red;
+        z-index:2;
+    }
+
+    #card:hover .front {
+        transform:rotateY(180deg);
+    }
+
+    #card .back {
+        background-color: blue;
+        transform:rotateY(-180deg);
+        position: absolute;
+        top:0;
+        left:0;
+    }
+
+    #card:hover .back {
+        transform:rotateY(0deg);
+    }
+
+    #card.flipped {
+        transform:rotateY(180deg);
+    }
+
+
+    </style>
+</head>
+<body>
+<div id="card">
+    <figure class="front">1</figure>
+    <figure class="back">2</figure>
+</div>
+</body>
+</html>

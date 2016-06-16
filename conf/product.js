@@ -1,0 +1,54 @@
+var ProductInfos = {
+    "drink":[
+    {
+        'name':'椰树椰汁',
+        'price':'3',
+        'pid':10001,
+        'cat':'drink'
+    },
+    {
+        'name':'可乐',
+        'price':'3',
+        'pid':10002,
+        'cat':'drink'
+    },
+    {
+        'name':'脉动',
+        'price':'5',
+        'pid':10003,
+        'cat':'drink'
+    },
+    {
+        'name':'王老吉',
+        'price':'4',
+        'pid':10004,
+        'cat':'drink'
+    },
+    {
+        'name':'鲜橙多',
+        'price':'3',
+        'pid':10005,
+        'cat':'drink'
+    }],
+    "icecream":[
+    {
+        'name':'绿豆爽',
+        'price':'2',
+        'pid':20001,
+        'cat':'icecream'
+    },
+    {
+        'name':'东北大板',
+        'price':'3',
+        'pid':20002,
+        'cat':'icecream'
+    },
+    {
+        'name':'小奶糕',
+        'price':'1',
+        'pid':20003,
+        'cat':'icecream'
+    }]
+}
+
+module.exports = ProductInfos;

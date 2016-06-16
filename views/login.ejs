@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+	<link rel="icon" href="https://o3e85j0cv.qnssl.com/static/favicon.png" type="image/x-icon">
+	<link href="https://o3e85j0cv.qnssl.com/static/app.24b6744b1ad464f0015767e053b68fa8.css" rel="stylesheet">
+	<link rel="stylesheet" href="/stylesheets/common.css">
+	<title>登录</title>
+</head>
+<body ontouchstart>
+	<header class="fixed_header">
+        <nav>
+            <div class="nav">
+                <a href="javascripts:void(0)" class="back_btn"></a>
+                <h2 class="title">登录</h2>
+            </div>
+        </nav>
+    </header>
+	<div class="container mt_hd">
+		<form action="/login" method="post">
+			<div class="v-transition">
+				<div class="weui_cell">
+					<div class="weui_cell_hd">
+						<label for="" class="weui_label">账户</label>
+					</div>
+					<div class="weui_cell_bd weui_cell_primary">
+						<input type="text" value="" name="username" class="weui_input" placeholder="请输入手机号" maxlength="11">
+					</div>
+					<div class="weui_cell_ft">
+						<i class="weui_icon weui_icon_clear" style="display:none;"></i>
+					</div>
+				</div>
+				<div class="weui_cell">
+					<div class="weui_cell_hd">
+						<label for="" class="weui_label">登录密码</label>
+					</div>
+					<div class="weui_cell_bd weui_cell_primary">
+						<input type="password" value="" name="password" class="weui_input" placeholder="请输入密码">
+					</div>
+				</div>
+				<div class="weui_cell">
+					<div class="weui_cell_ft" style="width:100%;">
+					<input type="submit" class="weui_btn weui_btn_primary">
+					</div>
+				</div>
+				<div class="register">
+					<a href="/register">注册</a>
+				</div>
+			</div>
+		</form>
+	</div>
+
+	<script type="text/javascript" src="/javascripts/zepto.min.js">
+	</script>
+	<script type="text/javascript" src="/javascripts/common.js">
+	</script>
+	<script>
+	$('input[type=submit]').click(function() {
+		var username = $.trim($('input[name=username]').val());
+		var password = $('input[name=password]').val();
+		if(username== '' || password == '') {
+			alert('请输入用户名或密码');
+			return false;
+		}
+
+		if(!/1[0-9]{10}/.test(username)) {
+			alert('请输入正确的手机号');
+			return false;
+		}
+
+		return true;
+	});
+	</script>
+</body>
+</html>

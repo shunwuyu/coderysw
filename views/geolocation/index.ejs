@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Geolocation</title>
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+</head>
+<body>
+    <h1>跟踪器</h1>
+    <p id="status">您的浏览器不支持Geolocation,大叔</p>
+    <h2>当前的位置</h2>
+    <p>
+        纬度:<div id="latitude"></div>
+    </p>
+    <p>
+        经度:<div id="longitude"></div>
+    </p>
+    <p>
+        准确度:<div id="accuracy"></div>
+    </p>
+    <h4 id="currDist">当前移动距离:0.0km</h4>
+    <h4 id="totalDist">总共移动距离:0.0km</h4>
+    <script>
+    var totalDistance = 0;
+    var lastLat;
+    var lastLng;
+    function loadLocation() {
+        if(navigator.geolocation) {
+            document.getElementById('status').innerHTML = '您的浏览器支持Geolocation';
+        } else {
+            document.getElementById('status').innerHTML = '您的浏览器不支持Geolocation';
+        }
+
+        navigator.geolocation.watchPosition(updateLocation,handleLocationError,{maximumAge:20000});
+    }
+
+    function toRadians(degree) {
+        return degree*Math.PI/180;
+    }
+
+    function distance(latitude1, longitude1, latitude2, longitude2) {
+    //R是地球的半径，单位是km
+    var R = 6371;
+    var deltaLatitude = toRadians(latitude2-latitude1);
+    var deltalLongitude = toRadians(longitude2 - longitude1);
+    latitude1 = toRadians(latitude1);
+    latitude2 = toRadians(latitude2);
+
+    var a = Math.sin(deltaLatitude/2)*
+    Math.sin(deltaLatitude/2) +
+    Math.cos(latitude1)*
+    Math.cos(latitude2)*
+    Math.sin(deltalLongitude/2)*
+    Math.sin(deltalLongitude/2);
+
+    var c = 2*Math.atan2(Math.sqrt(a),
+    Math.sqrt(1-a));
+    var d = R*c;
+    return d;
+
+    }
+
+    function updateLocation(position) {
+        var latitude = position.coords.latitude;
+        var longitude = position.coords.longitude;
+        var accuracy = position.coords.accuracy;
+
+        document.getElementById('latitude').innerHTML = latitude;
+        document.getElementById('longitude').innerHTML = longitude;
+        document.getElementById('accuracy').innerHTML = accuracy;
+
+        if(accuracy >= 500) {
+            document.getElementById('status').innerHTML = '准确度有缺失,不使用';
+            return;
+        }
+
+        if(latitude !== null && longitude !== null) {
+            var currentDistance = distance(latitude, longitude, lastLat, lastLng);
+            document.getElementById('currDist').innerHTML = "当前偏移:" + currentDistance.toFixed(4) + "km";
+            if(currentDistance) {
+                totalDistance += currentDistance;
+            }
+
+            if(totalDistance) {
+                document.getElementById('totalDist').innerHTML = "总共走了" + totalDistance ;
+            }
+        }
+        lastLat = latitude;
+        lastLng = longitude;
+        document.getElementById('status').innerHTML = '位置更新成功';
+    }
+
+    function handleLocationError(error) {
+
+    }
+    window.addEventListener('load', loadLocation, true);
+    </script>
+</body>
+</html>

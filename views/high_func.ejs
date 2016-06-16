@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>High Function Ajax 回调</title>
+    <script src="//cdn.bootcss.com/jquery/2.0.0/jquery.min.js"></script>
+</head>
+<body>
+    <img src="" alt="" id="avatar" />
+    <p id="name">无名氏</p>
+    <a href="javascript:;" id="btn">请求</a>
+    <script>
+    var getUserInfo = function(userId, callback) {
+        alert('fdfdfd');
+        $.getJSON('/todos/getUserInfo/' + userId, function(data) {
+            if(typeof callback == 'function') {
+                callback(data);
+            }
+        });
+    }
+
+    getUserInfo(11111, function(data) {
+        document.getElementById('avatar').setAttribute('src',data.avatar);
+        document.getElementById('name').innerHTML = data.name;
+    });
+
+    </script>
+</body>
+</html>

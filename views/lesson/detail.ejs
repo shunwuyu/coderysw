@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <link rel="stylesheet" href="/stylesheets/weui.min.css">
+</head>
+<body>
+<div class="container">
+    <div class="lesson_detail">
+        <div class="hd"></div>
+        <div class="bd">
+            <div class="weui_cells_title">已上课</div>
+            <div class="weui_cells">
+                <%
+                    for(var i = 0; i < data.length; i++) {
+                        var item = data[i];
+                        if(item.status == 2) {
+                %>
+                <div class="weui_cell">
+                    <div class="weui_cell_bd weui_cell_primary">
+                        <p><%= item.name%></p>
+                    </div>
+                    <div class="weui_cell_ft"></div>
+                </div>
+                <%  } %>
+                <%} %>
+            </div>
+            <div class="weui_cells_title">未上课</div>
+            <div class="weui_cells weui_cells_checkbox">
+                <%
+                    for(var i = 0; i < data.length; i++) {
+                        var item = data[i];
+                        if(item.status == 0) {
+                %>
+                <label class="weui_cell weui_check_label" for="s11<%= i%>">
+                    <div class="weui_cell_bd weui_cell_primary">
+                        <p><%= item.name%></p>
+                    </div>
+                    <div class="weui_cell_hd">
+                        <input type="checkbox" class="weui_check" name="checkbox1" id="s11<%= i%>" data-uid="<%= item.id%>">
+                        <i class="weui_icon_checked"></i>
+                    </div>
+                </label>
+                <%  } %>
+                <%} %>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="/javascripts/zepto.min.js"></script>
+<script>
+$(function() {
+    var lid = '<%= id%>';
+    $('.weui_check').click(function() {
+        var isChecked = $(this).prop('checked');
+        var uid = $(this).data('uid');
+        $.getJSON('/lesson/api/saveLessonRecord',{lid:lid,uid:uid}, function(data) {
+            
+        });
+    });
+});
+</script>
+</body>
+</html>

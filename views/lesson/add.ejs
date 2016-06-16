@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>添加课程</title>
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <link rel="stylesheet" href="/stylesheets/weui.min.css"/>
+</head>
+<body>
+    <div class="container">
+        <div class="lesson_add">
+            <div class="hd"></div>
+            <div class="bd">
+                <form action="/lesson/add" method="post">
+                    <div class="weui_cells weui_cells_form">
+                        <div class="weui_cell" id="lesson_cell">
+                            <div class="weui_cell_hd"><label for="" class="weui_label">标题</label></div>
+                            <div class="weui_cell_bd weui_cell_primary" >
+                                <input class="weui_input" id="lesson" name="title" type="text" required value="" placeholder="请输入课程名">
+                            </div>
+                            <div class="weui_cell_ft">
+                                <i class="weui_icon_warn"></i>
+                            </div>
+                        </div>
+                        <div class="weui_cell weui_cell_select">
+                            <div class="weui_cell_bd weui_cell_primary">
+                                <select class="weui_select" name="cat">
+                                    <option selected="" value="1">HTML5</option>
+                                    <option value="2">CSS3</option>
+                                    <option value="3">JavaScript</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="weui_btn_area">
+                        <button type="submit" class="weui_btn weui_btn_primary" href="/lesson/add" >添加</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script src="/javascripts/zepto.min.js"></script>
+    <script>
+    $(function() {
+        
+    });
+    </script>
+</body>
+</html>
